@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model GolfCourse {
+  id               Int                @id @default(autoincrement())
+  name             String
+  par              Int
+  holes            Int
+  city             String
+  state            String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  GolfCourseReview GolfCourseReview[]
+}
+
+model User {
+  id               Int                @id @default(autoincrement())
+  clerkId          String
+  email            String             @unique
+  firstName        String
+  lastName         String
+  birthDate        DateTime
+  handicap         Float
+  gender           String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  GolfCourseReview GolfCourseReview[]
+  Post             Post[]
+  PostComment      PostComment[]
+}
+
+model GolfCourseReview {
+  id        Int        @id @default(autoincrement())
+  rating    Int
+  review    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  course    GolfCourse @relation(fields: [courseId], references: [id])
+  courseId  Int
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Post {
+  id          Int           @id @default(autoincrement())
+  title       String
+  content     String
+  published   Boolean       @default(false)
+  author      User          @relation(fields: [authorId], references: [id])
+  authorId    Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  PostComment PostComment[]
+}
+
+model PostComment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
