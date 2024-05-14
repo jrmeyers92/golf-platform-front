@@ -6,6 +6,10 @@ import { auth, clerkClient } from "@clerk/nextjs/server";
 export const completeOnboarding = async (formData: FormData) => {
   const { userId } = auth();
 
+  if (!userId) {
+    return { error: "User not found." };
+  }
+
   try {
     await db.user.create({
       data: {
