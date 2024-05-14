@@ -3,7 +3,6 @@ import { currentUser } from "@clerk/nextjs/server";
 import OnboardingForm from "./components/OnboardingForm";
 
 export default async function OnboardingComponent({}) {
-  // const { user } = useUser();
   const user = await currentUser();
 
   if (!user) {

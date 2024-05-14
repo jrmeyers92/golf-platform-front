@@ -1,6 +1,8 @@
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { cn } from "@/lib/utils";
+import { SignedIn, SignedOut, SignUpButton } from "@clerk/nextjs";
 import Image from "next/image";
-import { Button } from "./ui/button";
+import PostModal from "./PostModal";
+import { Button, buttonVariants } from "./ui/button";
 
 const HomeHero = () => {
   return (
@@ -22,9 +24,25 @@ const HomeHero = () => {
           <SignedOut>The best place to find golf courses near you.</SignedOut>
           <SignedIn>Find your next golf course.</SignedIn>
         </p>
-        <Button className="mt-4 bg-green-500 hover:bg-green-600">
-          Find Courses
-        </Button>
+
+        <SignedIn>
+          {/* <Button className="mt-4 bg-green-500 hover:bg-green-600">
+            Make a Post
+          </Button> */}
+          <PostModal
+            buttonText="Make A Post"
+            buttonClasses="mt-4 bg-green-500 hover:bg-green-600"
+          />
+        </SignedIn>
+
+        <SignedOut>
+          <SignUpButton
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "mt-4 bg-green-500 hover:bg-green-600",
+            )}
+          />
+        </SignedOut>
       </div>
     </section>
   );
