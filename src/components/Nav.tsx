@@ -1,13 +1,14 @@
-import { buttonVariants } from "./ui/button";
-import Link from "next/link";
+import { cn } from "@/lib/utils";
 import {
+  SignedIn,
   SignedOut,
   SignInButton,
   SignOutButton,
   SignUpButton,
-  SignedIn,
   UserButton,
 } from "@clerk/nextjs";
+import Link from "next/link";
+import { Button, buttonVariants } from "./ui/button";
 
 export const Nav = () => {
   return (
@@ -18,8 +19,15 @@ export const Nav = () => {
 
       <div className="flex gap-2">
         <SignedOut>
-          <SignUpButton className={buttonVariants()} />
-          <SignInButton className={buttonVariants({ variant: "outline" })} />
+          <Button asChild>
+            <SignUpButton />
+          </Button>
+          <Button
+            asChild
+            className={cn(buttonVariants({ variant: "outline" }), "text-black")}
+          >
+            <SignInButton />
+          </Button>
         </SignedOut>
         <SignedIn>
           <div className="mr-2">
