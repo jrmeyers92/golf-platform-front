@@ -178,7 +178,7 @@ const OnboardingForm = () => {
             )}
           />
 
-          <div className="max-w-1/2">
+          <div className="max-w-1/2 w-1/2">
             <FormField
               control={form.control}
               name="birthYear"
