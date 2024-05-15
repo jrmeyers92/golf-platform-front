@@ -25,6 +25,9 @@ export const completeOnboarding = async (formData: FormData) => {
         birthDay: parseInt(formData.get("birthDay")?.toString() ?? "") || null,
         handicap: parseInt(formData.get("handicap")?.toString() ?? "") || null,
         gender: formData.get("gender")?.toString() || "",
+        city: formData.get("city")?.toString() || "",
+        state: formData.get("state")?.toString() || "",
+        zipCode: Number(formData.get("zipCode")),
       },
     });
   } catch (err) {
