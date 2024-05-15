@@ -20,7 +20,7 @@ export const completeOnboarding = async (formData: FormData) => {
         lastName: formData.get("lastName")?.toString() || "",
         birthYear:
           parseInt(formData.get("birthYear")?.toString() ?? "") || null,
-        birthMonth: parseInt(formData.get("birthMonth")?.toString() || ""),
+        birthMonth: formData.get("birthMonth")?.toString() || "",
         birthDay: parseInt(formData.get("birthDay")?.toString() ?? "") || null,
         handicap: parseInt(formData.get("handicap")?.toString() ?? "") || null,
         gender: formData.get("gender")?.toString() || "",
