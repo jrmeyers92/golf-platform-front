@@ -2,7 +2,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import db from "@/db/db";
 import { auth } from "@clerk/nextjs/server";
-import { Post } from "@prisma/client";
 
 type PostType = {
   id: number;
