@@ -135,7 +135,7 @@ const OnboardingForm = () => {
                 )}
               />
             </div>
-            <div class="w-1/2">
+            <div className="w-1/2">
               <FormField
                 control={form.control}
                 name="handicap"
