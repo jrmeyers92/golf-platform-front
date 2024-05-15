@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { completeOnboarding } from "../_actions";
+import { Monthes } from "./MonthsArray";
 import { States } from "./StatesArray";
 const OnboardingForm = () => {
   const router = useRouter();
@@ -42,7 +43,7 @@ const OnboardingForm = () => {
     email: z.string().email(),
     handicap: z.number().min(-36).max(36).optional(),
     birthYear: z.number().min(1900).max(2021).optional(),
-    birthMonth: z.number().min(1).max(12).optional(),
+    birthMonth: z.string().optional(),
     birthDay: z.number().min(1).max(31).optional(),
     gender: z.enum(["male", "female", "nonBinary"]).optional(),
     city: z.string(),
@@ -293,16 +294,23 @@ const OnboardingForm = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Birth Month</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="Birth Month"
-                        {...field}
-                        onChange={(e) => {
-                          field.onChange(parseInt(e.target.value));
-                        }}
-                      />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Month you wore born." />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {Monthes.map((month) => (
+                          <SelectItem key={month} value={month}>
+                            {month}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
