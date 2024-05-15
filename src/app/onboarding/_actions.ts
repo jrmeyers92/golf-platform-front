@@ -14,7 +14,7 @@ export const completeOnboarding = async (formData: FormData) => {
     await db.user.create({
       data: {
         // Set the properties of the new user here
-        clerkId: formData.get("clerkId")?.toString() || "",
+        clerkId: userId,
         email: formData.get("email")?.toString() || "",
         firstName: formData.get("firstName")?.toString() || "",
         lastName: formData.get("lastName")?.toString() || "",

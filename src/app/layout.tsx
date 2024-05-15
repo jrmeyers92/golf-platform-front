@@ -1,9 +1,10 @@
+import { Nav } from "@/components/Nav";
+import { Toaster } from "@/components/ui/toaster";
+import { ClerkProvider } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Nav } from "@/components/Nav";
-import { ClerkProvider } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
 
 export const metadata: Metadata = {
   title: "Ultimate golf platfrom",
@@ -23,6 +24,7 @@ export default function RootLayout({
         <body className="itme flex flex-col items-center">
           <Nav />
           {children}
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

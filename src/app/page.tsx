@@ -1,13 +1,16 @@
 import HomeHero from "@/components/HomeHero";
-import { auth, currentUser } from "@clerk/nextjs/server";
+import MyPosts from "@/components/MyPosts";
 
 export default async function Home() {
-  const { userId } = auth();
-  const user = await currentUser();
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       <HomeHero />
+      <div className="container my-6 grid grid-cols-3 gap-4">
+        <div className="col-span-1 ">
+          <MyPosts />
+        </div>
+        <div className="col-span-2 h-10"></div>
+      </div>
     </main>
   );
 }
