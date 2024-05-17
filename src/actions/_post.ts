@@ -34,6 +34,7 @@ export const createPost = async (formData: FormData) => {
         authorId: user.id,
         title: formData.get("title")?.toString() || "",
         content: formData.get("content")?.toString() || "",
+        file: formData.get("file")?.toString() || "",
       },
     });
     return { success: true, post };

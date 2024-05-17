@@ -55,6 +55,7 @@ model GolfCourseReview {
 model Post {
   id          Int           @id @default(autoincrement())
   title       String
+  file        String?
   content     String
   authorId    Int
   createdAt   DateTime      @default(now())

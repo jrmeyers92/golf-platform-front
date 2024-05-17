@@ -42,6 +42,7 @@ const PostModal = ({ buttonClasses, buttonText }: PostModalProps) => {
   const createPostSchema = z.object({
     title: z.string().min(2).max(255),
     content: z.string().min(2).max(500),
+    file: z.string().optional(),
   });
 
   const form = useForm<z.infer<typeof createPostSchema>>({
@@ -49,6 +50,7 @@ const PostModal = ({ buttonClasses, buttonText }: PostModalProps) => {
     defaultValues: {
       title: "",
       content: "",
+      file: "",
     },
   });
 
@@ -117,6 +119,25 @@ const PostModal = ({ buttonClasses, buttonText }: PostModalProps) => {
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="file"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Picture or Video</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Picture or Video"
+                      type="file"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <Button className="w-full" type="submit">
               Submit
             </Button>
