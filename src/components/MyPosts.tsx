@@ -2,11 +2,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import db from "@/db/db";
 import { auth } from "@clerk/nextjs/server";
+import Image from "next/image";
 
 type PostType = {
   id: number;
   title: string;
   content: string;
+  file: string | null;
   authorId: number;
   createdAt: Date;
   updatedAt: Date;
@@ -49,7 +51,7 @@ const MyPosts = async () => {
 
   return (
     <section className="border p-4">
-      <h2 className="mb-2 text-center text-2xl">My Posts</h2>
+      <h2 className="mb-2 text-center text-2xl font-bold">My Posts</h2>
       {posts.length === 0 && (
         <p className="text-center">You don't have any posts yet.</p>
       )}
@@ -63,7 +65,15 @@ const MyPosts = async () => {
                   <CardTitle>{post.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p>{post.content}</p>
+                  <p className="mb-2">{post.content}</p>
+                  {post.file && (
+                    <Image
+                      src={post.file}
+                      width={200}
+                      height={200}
+                      alt="test"
+                    />
+                  )}
                 </CardContent>
               </Card>
             </li>
