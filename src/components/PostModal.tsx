@@ -1,5 +1,6 @@
 "use client";
 
+import { createPost } from "@/actions/_createPost";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -24,29 +25,33 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { createPost } from "@/actions/_post";
-
 interface PostModalProps {
   buttonClasses?: string;
   buttonText: string;
 }
 
+const computeSHA256 = async (file: File) => {
+  const buffer = await file.arrayBuffer();
+  const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  return hashHex;
+};
+
+const formSchema = z.object({
+  title: z.string().min(2).max(255),
+  content: z.string().min(2).max(500),
+  file: z.any(),
+});
+
 const PostModal = ({ buttonClasses, buttonText }: PostModalProps) => {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
 
-  // if (!isLoaded) {
-  //   return <div>Loading</div>;
-  // }
-
-  const createPostSchema = z.object({
-    title: z.string().min(2).max(255),
-    content: z.string().min(2).max(500),
-    file: z.string().optional(),
-  });
-
-  const form = useForm<z.infer<typeof createPostSchema>>({
-    resolver: zodResolver(createPostSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
       content: "",
@@ -54,27 +59,54 @@ const PostModal = ({ buttonClasses, buttonText }: PostModalProps) => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof createPostSchema>) => {
+  const fileRef = form.register("file");
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const formData = new FormData();
     Object.entries(values).forEach(([key, value]) => {
       formData.append(key, String(value));
     });
 
-    const res = await createPost(formData);
-    if (res.success) {
+    const checksum = await computeSHA256(values.file[0]);
+
+    const signedUrlResult = await createPost(
+      values.file[0].type,
+      values.file[0].size,
+      checksum,
+      formData,
+    );
+
+    if (signedUrlResult.failure !== undefined) {
       setOpen(false);
       toast({
-        title: "Post created",
-        description: "Your post has been created successfully",
+        title: "Failed to create post",
+        description: "Failed to create post, please try again",
       });
+      console.error("Failed to get signed url", signedUrlResult.failure);
+      return;
+    }
 
-      // clear form inputs
-      form.reset();
-    } else {
-      console.log("form submission fialed", res.error);
+    const url = signedUrlResult?.success?.url;
+
+    const response = await fetch(url, {
+      method: "PUT",
+      body: values.file[0],
+      headers: {
+        "Content-Type": values.file[0].type,
+      },
+    });
+
+    if (!response.ok) {
+      // handle error
+      console.error("Failed to upload file", response.statusText);
+      return;
     }
 
     setOpen(false);
+    toast({
+      title: "Success",
+      description: "Created post successfully!",
+    });
   };
 
   return (
@@ -123,19 +155,22 @@ const PostModal = ({ buttonClasses, buttonText }: PostModalProps) => {
             <FormField
               control={form.control}
               name="file"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Picture or Video</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Picture or Video"
-                      type="file"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <FormLabel>File</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="file"
+                        placeholder="shadcn"
+                        {...fileRef}
+                        accept="image/jpeg, image/png, image/webp, image/gif, video/mp4, video/webm"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
             />
 
             <Button className="w-full" type="submit">
