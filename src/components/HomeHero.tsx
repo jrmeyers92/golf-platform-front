@@ -30,9 +30,6 @@ const HomeHero = () => {
         </p>
 
         <SignedIn>
-          {/* <Button className="mt-4 bg-green-500 hover:bg-green-600">
-            Make a Post
-          </Button> */}
           <PostModal
             buttonText="Make A Post"
             buttonClasses="mt-4 bg-green-500 hover:bg-green-600"

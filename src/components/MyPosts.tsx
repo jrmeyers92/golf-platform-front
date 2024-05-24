@@ -1,8 +1,10 @@
 // get posts my posts from db
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 import db from "@/db/db";
 import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
+import DeletePost from "./DeletePost";
 
 type PostType = {
   id: number;
@@ -61,8 +63,11 @@ const MyPosts = async () => {
           posts.map((post: PostType) => (
             <li key={post.id} className="h-full">
               <Card className="h-full">
-                <CardHeader>
+                <CardHeader className="flex flex-row items-center justify-between">
                   <CardTitle>{post.title}</CardTitle>
+                  {post.id}
+
+                  <DeletePost postId={post.id} />
                 </CardHeader>
                 <CardContent>
                   <p className="mb-2">{post.content}</p>
