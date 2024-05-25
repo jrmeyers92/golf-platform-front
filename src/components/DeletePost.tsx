@@ -1,5 +1,6 @@
 "use client";
 
+import { deletePost } from "@/actions/_deletePost";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,13 +21,18 @@ import {
 } from "@/components/ui/tooltip";
 import { CopyX } from "lucide-react";
 
-const DeletePost = ({ postId: string }) => {
+type DeletePostProps = {
+  postId: number;
+  file: string;
+};
+
+const DeletePost = ({ postId, file }: DeletePostProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <CopyX />
             </TooltipTrigger>
             <TooltipContent>
@@ -47,6 +53,7 @@ const DeletePost = ({ postId: string }) => {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             className={buttonVariants({ variant: "destructive" })}
+            onClick={() => deletePost(postId, file)}
           >
             Delete
           </AlertDialogAction>

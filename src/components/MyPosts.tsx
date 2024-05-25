@@ -65,9 +65,7 @@ const MyPosts = async () => {
               <Card className="h-full">
                 <CardHeader className="flex flex-row items-center justify-between">
                   <CardTitle>{post.title}</CardTitle>
-                  {post.id}
-
-                  <DeletePost postId={post.id} />
+                  <DeletePost postId={post.id} file={post.file || ""} />
                 </CardHeader>
                 <CardContent>
                   <p className="mb-2">{post.content}</p>

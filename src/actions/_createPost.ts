@@ -9,6 +9,7 @@ import {
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { auth } from "@clerk/nextjs/server";
 import crypto from "crypto";
+import { revalidatePath } from "next/cache";
 
 const generateFileName = (bytes = 32) =>
   crypto.randomBytes(bytes).toString("hex");
@@ -103,6 +104,8 @@ export async function createPost(
     console.error(err);
     return { failure: "There was an error creating the post." };
   }
+
+  revalidatePath("/");
 
   return {
     success: {

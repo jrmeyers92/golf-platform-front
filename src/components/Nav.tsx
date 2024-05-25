@@ -3,7 +3,6 @@ import {
   SignedIn,
   SignedOut,
   SignInButton,
-  SignOutButton,
   SignUpButton,
   UserButton,
 } from "@clerk/nextjs";
