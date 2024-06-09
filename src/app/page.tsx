@@ -1,3 +1,4 @@
+import AllPosts from "@/components/AllPosts";
 import HomeHero from "@/components/HomeHero";
 import MyPosts from "@/components/MyPosts";
 import { SignedIn } from "@clerk/nextjs";
@@ -11,7 +12,9 @@ export default async function Home() {
           <div className="col-span-1 ">
             <MyPosts />
           </div>
-          <div className="col-span-2 h-10"></div>
+          <div className="col-span-2 h-10">
+            <AllPosts />
+          </div>
         </div>
       </SignedIn>
     </main>
