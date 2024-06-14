@@ -20,24 +20,26 @@ model GolfCourse {
 }
 
 model User {
-  id               Int                @id @default(autoincrement())
-  clerkId          String             @unique
-  email            String             @unique
-  firstName        String
-  lastName         String
-  birthYear        Int?
-  birthMonth       String?
-  birthDay         Int?
-  handicap         Float?
-  gender           String?
-  city             String
-  state            String
-  zipCode          Int
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  GolfCourseReview GolfCourseReview[]
-  Post             Post[]
-  PostComment      PostComment[]
+  id                  Int                   @id @default(autoincrement())
+  clerkId             String                @unique
+  email               String                @unique
+  firstName           String
+  lastName            String
+  birthYear           Int?
+  birthMonth          String?
+  birthDay            Int?
+  handicap            Float?
+  gender              String?
+  city                String
+  state               String
+  zipCode             Int
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  GolfCourseReview    GolfCourseReview[]
+  Post                Post[]
+  PostComment         PostComment[]
+  CountryClubCostPost CountryClubCostPost[]
+  CountryClub         CountryClub[]
 }
 
 model GolfCourseReview {
@@ -73,4 +75,40 @@ model PostComment {
   updatedAt DateTime @updatedAt
   author    User     @relation(fields: [authorId], references: [id])
   post      Post     @relation(fields: [postId], references: [id])
+}
+
+model CountryClub {
+  id                  Int                   @id @default(autoincrement())
+  name                String
+  address             String
+  phoneNumber         String?
+  city                String
+  state               String
+  files               File[]
+  zipCode             Int
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  authorId            Int
+  author              User                  @relation(fields: [authorId], references: [id])
+  CountryClubCostPost CountryClubCostPost[]
+}
+
+model File {
+  id            Int          @id @default(autoincrement())
+  path          String
+  CountryClub   CountryClub? @relation(fields: [countryClubId], references: [id])
+  countryClubId Int?
+}
+
+model CountryClubCostPost {
+  id            Int         @id @default(autoincrement())
+  initiationFee Int
+  monthlyDues   Int
+  content       String
+  clubId        Int
+  authorId      Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  author        User        @relation(fields: [authorId], references: [id])
+  club          CountryClub @relation(fields: [clubId], references: [id])
 }

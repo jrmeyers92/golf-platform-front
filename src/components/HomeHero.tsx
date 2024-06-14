@@ -5,10 +5,6 @@ import PostModal from "./PostModal";
 import { Button, buttonVariants } from "./ui/button";
 
 const HomeHero = () => {
-  const siginInButtonClass = cn(
-    buttonVariants({ size: "lg" }),
-    "mt-4 bg-green-500 hover:bg-green-600",
-  );
   return (
     <section className="relative max-h-[92vh] w-full overflow-hidden">
       <Image

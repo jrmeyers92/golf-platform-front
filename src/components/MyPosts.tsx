@@ -75,6 +75,7 @@ const MyPosts = async () => {
                       width={200}
                       height={200}
                       alt="test"
+                      className="aspect-square w-full object-cover"
                     />
                   )}
                 </CardContent>

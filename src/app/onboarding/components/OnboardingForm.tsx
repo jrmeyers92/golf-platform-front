@@ -18,14 +18,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Monthes } from "@/lib/MonthsArray";
+import { States } from "@/lib/StatesArray";
 import { useUser } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { completeOnboarding } from "../_actions";
-import { Monthes } from "./MonthsArray";
-import { States } from "./StatesArray";
 const OnboardingForm = () => {
   const router = useRouter();
   const { isLoaded, user } = useUser();

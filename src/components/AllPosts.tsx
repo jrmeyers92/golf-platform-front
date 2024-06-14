@@ -30,12 +30,13 @@ const getPosts = async () => {
       createdAt: "desc",
     },
     include: {
-      author: {
-        select: {
-          firstName: true,
-          lastName: true,
-        },
-      },
+      author: true,
+      // {
+      //   select: {
+      //     firstName: true,
+      //     lastName: true,
+      //   },
+      // },
     },
   });
 
@@ -49,10 +50,12 @@ const AllPosts = async () => {
     return <p>Error: There was an issue retrieving posts</p>;
   }
 
+  let gridClass = posts.length > 3 ? "lg:grid-cols-3" : "grid-cols-2";
+
   return (
     <div>
-      <h2>Others Posts</h2>
-      <div className="flex">
+      <h2 className="mb-2 text-center text-2xl font-bold">Others Posts</h2>
+      <div className={`grid w-full grid-cols-2 gap-4 ${gridClass}`}>
         {posts.map((post) => (
           <Post key={post.id} post={post} />
         ))}

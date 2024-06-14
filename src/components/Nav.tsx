@@ -16,6 +16,10 @@ export const Nav = () => {
         <Link href="/">Golfrr</Link>
       </h1>
 
+      <Link href="/country-clubs" className="text-md ml-auto mr-4 font-bold">
+        Country Clubs
+      </Link>
+
       <div className="flex gap-2">
         <SignedOut>
           <Button asChild>
