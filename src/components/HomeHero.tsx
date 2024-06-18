@@ -26,18 +26,15 @@ const HomeHero = () => {
         </p>
 
         <SignedIn>
-          <PostModal
-            buttonText="Make A Post"
-            buttonClasses="mt-4 bg-green-500 hover:bg-green-600"
-          />
+          <PostModal buttonText="Make A Post" buttonClasses="mt-4 " />
         </SignedIn>
 
         <SignedOut>
           <Button
             asChild
             className={cn(
-              buttonVariants({ size: "lg" }),
-              "mt-4 bg-green-500 hover:bg-green-600",
+              buttonVariants({ size: "lg", variant: "primary" }),
+              "mt-4 ",
             )}
           >
             <SignUpButton />

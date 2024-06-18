@@ -112,7 +112,9 @@ const PostModal = ({ buttonClasses, buttonText }: PostModalProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className={buttonClasses}>{buttonText}</Button>
+        <Button className={buttonClasses} variant="primary">
+          {buttonText}
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="space-between flex w-full flex-row items-center">

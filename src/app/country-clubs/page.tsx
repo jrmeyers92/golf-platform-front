@@ -38,7 +38,7 @@ const countryClubs = async () => {
           <h1 className="text-5xl font-bold text-white">Country Clubs</h1>
           <CountryClubCreateModal
             buttonText="Create a Country Club"
-            buttonClasses="mt-4 bg-green-500 hover:bg-green-600"
+            buttonClasses="mt-4"
           />
         </div>
       </div>
